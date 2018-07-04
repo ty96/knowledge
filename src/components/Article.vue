@@ -29,7 +29,23 @@
           .then((data)=> {
             this.data = data.body.article
             this.$refs.content.innerHTML = this.data.content
+            this.shareSettings(this.data.title, root + this.data.picture)
           })
+      },
+      shareSettings (title, image) {
+        window.wx.onMenuShareTimeline({
+          title: title,
+          link: location.href,
+          imgUrl: image
+        })
+        window.wx.onMenuShareAppMessage({
+          title: title,
+          desc: '',
+          link: location.href,
+          imgUrl: image,
+          type: 'link',
+          dataUrl: ''
+        });
       }
     },
     mounted () {

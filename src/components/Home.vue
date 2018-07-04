@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="banner" src="../assets/banner.png"/>
+    <img class="banner" src="../assets/banner.png" ref="image"/>
     <div class="search">
       <img src="../assets/search.png"/>
       <input v-model="search" placeholder="搜索相关内容" @input="request"/>
@@ -44,7 +44,23 @@
           })
           .then((data)=> {
             this.data = data.body.article_list
+            this.shareSettings('工业油必知必会')
           })
+      },
+      shareSettings (title, image) {
+        window.wx.onMenuShareTimeline({
+          title: title,
+          link: location.href,
+          imgUrl: image || this.$refs.image.src
+        })
+        window.wx.onMenuShareAppMessage({
+          title: title,
+          desc: '',
+          link: location.href,
+          imgUrl: image || this.$refs.image.src,
+          type: 'link',
+          dataUrl: ''
+        });
       }
     },
     mounted () {
